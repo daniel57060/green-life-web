@@ -5,9 +5,8 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 
 import { Layout } from '../../layout/Layout'
-import Chart from './Chart'
-import Deposits from './Deposits'
-import Orders from './Orders'
+import Statistics from './Statistics'
+import TerrainsGrid from './TerrainsGrid'
 
 function Copyright(props: any) {
   return (
@@ -28,17 +27,10 @@ export function MainPage() {
       {/* <Toolbar /> */}
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
-          {/* Chart */}
+          {/* Recent Orders */}
           <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                height: 240,
-              }}
-            >
-              <Chart />
+            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 700 }}>
+              <TerrainsGrid />
             </Paper>
           </Grid>
           {/* Recent Deposits */}
@@ -48,16 +40,10 @@ export function MainPage() {
                 p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                height: 240,
+                height: 700,
               }}
             >
-              <Deposits />
-            </Paper>
-          </Grid>
-          {/* Recent Orders */}
-          <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <Orders />
+              <Statistics />
             </Paper>
           </Grid>
         </Grid>

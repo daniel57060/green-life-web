@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography'
 
 import logo from '../../assets/images/logo.png'
 import List, { ListProps } from '@mui/material/List'
+import React from 'react'
 
 export const drawerWidthClose: number = 64
 export const drawerWidthOpen: number = 240
@@ -155,10 +156,12 @@ export default function MainDrawer({ open, toggleDrawer, activeItem, onClickItem
       <Divider />
       <DrawerList>
         {items.map((item) => (
-          <ListItemButton {...buttonProps(item.id)} key={item.id}>
-            <IconListItem>{item.icon}</IconListItem>
-            <ListItemText primary={item.label} />
-          </ListItemButton>
+          <React.Fragment key={item.id}>
+            <ListItemButton {...buttonProps(item.id)}>
+              <IconListItem>{item.icon}</IconListItem>
+              <ListItemText primary={item.label} />
+            </ListItemButton>
+          </React.Fragment>
         ))}
       </DrawerList>
     </Drawer>
