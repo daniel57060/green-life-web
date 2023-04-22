@@ -27,6 +27,7 @@ import Typography from '@mui/material/Typography'
 import React from 'react'
 
 import logo from '../../assets/images/logo.png'
+import FancyContainer from '../../components/FacyContainer'
 import Chart from './Chart'
 import Deposits from './Deposits'
 import Orders from './Orders'
@@ -101,11 +102,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 function MainContent() {
   return (
-    <Box
+    <FancyContainer
       component="main"
       sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
@@ -149,7 +148,7 @@ function MainContent() {
         </Grid>
         <Copyright sx={{ pt: 4 }} />
       </Container>
-    </Box>
+    </FancyContainer>
   )
 }
 
