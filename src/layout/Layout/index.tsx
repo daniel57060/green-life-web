@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
 import React from 'react'
 
 import FancyContainer from '../../components/FacyContainer'
@@ -13,7 +12,6 @@ export function Layout({ children }: React.PropsWithChildren<{}>) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <MainAppBar open={open} />
       <MainDrawer
         open={open}
         toggleDrawer={toggleDrawer}
@@ -28,7 +26,7 @@ export function Layout({ children }: React.PropsWithChildren<{}>) {
           overflow: 'auto',
         }}
       >
-        <Toolbar />
+        <MainAppBar />
         {children}
       </FancyContainer>
     </Box>
