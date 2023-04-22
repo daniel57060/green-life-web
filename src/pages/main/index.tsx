@@ -1,6 +1,12 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ConstructionIcon from '@mui/icons-material/Construction'
+import GrassIcon from '@mui/icons-material/Grass'
+import HomeIcon from '@mui/icons-material/Home'
+import LayersIcon from '@mui/icons-material/Layers'
 import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import PeopleIcon from '@mui/icons-material/People'
+import ShoppingCartIcon from '@mui/icons-material/Shop'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
@@ -11,27 +17,19 @@ import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
 import Link from '@mui/material/Link'
 import List, { ListProps } from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import IconListItem from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import React from 'react'
 
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import HomeIcon from '@mui/icons-material/Home'
-import ShoppingCartIcon from '@mui/icons-material/Shop'
-import PeopleIcon from '@mui/icons-material/People'
-import ConstructionIcon from '@mui/icons-material/Construction'
-import GrassIcon from '@mui/icons-material/Grass'
-import Layers2Icon from '@mui/icons-material/Psychology'
-
+import logo from '../../assets/images/logo.png'
 import Chart from './Chart'
 import Deposits from './Deposits'
 import Orders from './Orders'
-
-import logo from '../../assets/images/logo.png'
 
 function Copyright(props: any) {
   return (
@@ -46,7 +44,8 @@ function Copyright(props: any) {
   )
 }
 
-const drawerWidth: number = 240
+const drawerWidthClose: number = 64
+const drawerWidthOpen: number = 240
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
@@ -54,45 +53,49 @@ interface AppBarProps extends MuiAppBarProps {
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}))
+})<AppBarProps>(({ theme, open }) =>
+  open
+    ? {
+        marginLeft: drawerWidthOpen,
+        width: `calc(100% - ${drawerWidthOpen}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      }
+    : {
+        marginLeft: drawerWidthClose,
+        width: `calc(100% - ${drawerWidthClose}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+      },
+)
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   '& .MuiDrawer-paper': {
     position: 'relative',
     whiteSpace: 'nowrap',
-    width: drawerWidth,
     backgroundColor: theme.palette.primary.main,
     color: 'white',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
     boxSizing: 'border-box',
-    ...(!open && {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9),
-      },
-    }),
+    overflowX: 'hidden',
+    ...(!open
+      ? {
+          width: drawerWidthClose,
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+        }
+      : {
+          width: drawerWidthOpen,
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        }),
   },
 }))
 
@@ -153,7 +156,10 @@ function MainContent() {
 const NavDrawerList = (props: ListProps) => <List component="nav" {...props} />
 const DrawerList = styled(NavDrawerList)<ListProps>(({ theme }) => ({
   'color': 'white',
-  ['& svg']: {
+  '& .MuiListItemButton-root': {
+    padding: theme.spacing(2),
+  },
+  '& svg': {
     color: 'white',
   },
   '& .active:hover': {
@@ -190,54 +196,65 @@ function MainDrawer({ open, toggleDrawer, activeItem, onClickItem }: MainDrawerP
           alignItems: 'center',
           justifyContent: 'flex-end',
           px: [1],
+          height: '80px',
         }}
       >
-        <Box py={0.5}>
-          <img src={logo} alt="Green Life logo" style={{ width: '60px' }} />
-        </Box>
-        <Typography component="h1" fontSize="22px" mr="auto" fontWeight="semi-bold">
-          Overview
-        </Typography>
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeftIcon sx={{ color: 'white' }} />
-        </IconButton>
+        {open ? (
+          <>
+            <Box py={0.5}>
+              <img src={logo} alt="Green Life logo" style={{ width: '60px' }} />
+            </Box>
+            <Typography component="h1" fontSize="22px" mr="auto" fontWeight="semi-bold">
+              Overview
+            </Typography>
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon sx={{ color: 'white' }} />
+            </IconButton>
+          </>
+        ) : (
+          <Box mx="auto">
+            <IconButton color="inherit" aria-label="open drawer" onClick={toggleDrawer}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
+        )}
       </Toolbar>
       <Divider />
       <DrawerList>
         <ListItemButton {...buttonProps('home')}>
-          <ListItemIcon>
+          <IconListItem>
             <HomeIcon />
-          </ListItemIcon>
+          </IconListItem>
           <ListItemText primary="Home" />
         </ListItemButton>
         <ListItemButton {...buttonProps('merchants')}>
-          <ListItemIcon>
+          <IconListItem>
             <ShoppingCartIcon />
-          </ListItemIcon>
+          </IconListItem>
           <ListItemText primary="Comerciantes" />
         </ListItemButton>
         <ListItemButton {...buttonProps('users')}>
-          <ListItemIcon>
+          <IconListItem>
             <PeopleIcon />
-          </ListItemIcon>
+          </IconListItem>
           <ListItemText primary="Usuários" />
         </ListItemButton>
         <ListItemButton {...buttonProps('terrain-manager')}>
-          <ListItemIcon>
-            <Layers2Icon />
-          </ListItemIcon>
+          <IconListItem>
+            <LayersIcon />
+          </IconListItem>
           <ListItemText primary="Gestão de Terrenos" />
         </ListItemButton>
         <ListItemButton {...buttonProps('tools')}>
-          <ListItemIcon>
+          <IconListItem>
             <ConstructionIcon />
-          </ListItemIcon>
+          </IconListItem>
           <ListItemText primary="Ferramentas" />
         </ListItemButton>
         <ListItemButton {...buttonProps('seeds')}>
-          <ListItemIcon>
+          <IconListItem>
             <GrassIcon />
-          </ListItemIcon>
+          </IconListItem>
           <ListItemText primary="Sementes" />
         </ListItemButton>
       </DrawerList>
@@ -245,7 +262,7 @@ function MainDrawer({ open, toggleDrawer, activeItem, onClickItem }: MainDrawerP
   )
 }
 
-function MainAppBar({ open, toggleDrawer }: { open: boolean; toggleDrawer: () => void }) {
+function MainAppBar({ open }: { open: boolean }) {
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -253,18 +270,6 @@ function MainAppBar({ open, toggleDrawer }: { open: boolean; toggleDrawer: () =>
           pr: '24px', // keep right padding when drawer closed
         }}
       >
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          onClick={toggleDrawer}
-          sx={{
-            marginRight: '36px',
-            ...(open && { display: 'none' }),
-          }}
-        >
-          <MenuIcon />
-        </IconButton>
         <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           Dashboard
         </Typography>
@@ -285,7 +290,7 @@ export function MainPage() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <MainAppBar open={open} toggleDrawer={toggleDrawer} />
+      <MainAppBar open={open} />
       <MainDrawer
         open={open}
         toggleDrawer={toggleDrawer}
